@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import Card from "../../Components/Card"
+import ProductDetail from '../../Components/ProductDetail'
 
 function Home() {
   const [items, setitems] = useState(null)
@@ -18,7 +19,8 @@ function Home() {
             return  <Card key={item.id} data={item} />
           })
         }
-        </div>        
+        </div>
+        <ProductDetail />   
       </>
     )
 }  
