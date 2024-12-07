@@ -1,5 +1,4 @@
 import { useRoutes,BrowserRouter } from 'react-router-dom'
-import './App.css'
 import Home from '../Home'
 import MyAccount from '../MyAccount'
 import MyOrders from '../MyOrders'
