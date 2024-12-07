@@ -1,12 +1,26 @@
-import { useContext } from 'react';
+import { useContext, useState  } from 'react';
 import { ShoppingCartContext } from "../../Context";
 import './style.css';
 import { XMarkIcon } from '@heroicons/react/24/solid'
 
 
 const ProductDetail = () =>{
+    const context = useContext(ShoppingCartContext);
+    const [quantity, setQuantity] = useState(1); // Estado para la cantidad seleccionada
 
-    const context = useContext(ShoppingCartContext);    
+    const handleIncrement = () => {
+        setQuantity(prevQuantity => prevQuantity + 1);
+    };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(prevQuantity => prevQuantity - 1);
+        }
+    };
+
+    const handleAddToCart = () => {
+        context.addToCart(context.productToShow, quantity);
+    };
 
     return (
         <aside 
@@ -18,13 +32,25 @@ const ProductDetail = () =>{
                 onClick={()=>context.closeProductDetail()}></XMarkIcon>          
             </div>
             <figure className='px-6'>
-                <img className='w-full h-full rounded-lg' src={context.productToShow.images[0]} alt={context.productToShow.title} />
+                <img className='w-full h-full rounded-lg' src={context.productToShow.image} alt={context.productToShow.productName} />
             </figure>
             <p className='flex flex-col p-6'>
-                <span className='font-medium text-2xl mb-2'>${context.productToShow.price}</span>
-                <span className='font-medium text-md'>{context.productToShow.title}</span>
-                <span className='font-light text-sm'>{context.productToShow.description}</span>
+                <span className='flex justify-between items-center mb-2'>
+                    <span className='font-medium text-2xl'>
+                        ${context.productToShow.price}
+                    </span>
+                    <span className='stock-qty'> {context.productToShow.stockQty} in stock</span>
+                </span>
+                <span className='font-medium text-md text-2xl  mb-4'>{context.productToShow.productName}</span>
+                <span className='font-medium text-md text-gray-500'>{context.productToShow.descript}</span>              
             </p>
+
+            <div className='flex items-center justify-between p-6'>
+                <button onClick={handleDecrement} className='px-2 py-1 bg-gray-200 rounded'>-</button>
+                <span className='mx-4'>{quantity}</span>
+                <button onClick={handleIncrement} className='px-2 py-1 bg-gray-200 rounded'>+</button>
+                <button onClick={handleAddToCart} className='ml-4 px-4 py-2 bg-blue-500 text-white rounded'>Add to Cart</button>
+            </div>
         </aside>
     )
 }
