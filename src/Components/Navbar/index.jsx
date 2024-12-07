@@ -19,29 +19,34 @@ const Navbar = () => {
             className: ''
         },
         {
-            to: '/clothes',
-            text: 'Clothes',
-            className: ''
+            to: '/accessories',
+            text: 'Accessories',
+            className: '',
+            value: 4
         },
         {
-            to: '/electronics',
-            text: 'Electronics',
-            className: ''
+            to: '/gconsoles',
+            text: 'Game Consoles',
+            className: '',
+            value: 3
         },
         {
-            to: '/furnitures',
-            text: 'Furnitures',
-            className: ''
+            to: '/laptopts',
+            text: 'Laptops',
+            className: '',
+            value: 1
         },
         {
-            to: '/toys',
-            text: 'Toys',
-            className: ''
+            to: '/smartphones',
+            text: 'Smartphones',
+            className: '',
+            value: 2
         },
         {
-            to: '/others',
-            text: 'Others',
-            className: ''
+            to: '/licenses',
+            text: 'Software Licenses',
+            className: '',
+            value: 5
         },
     ]
     

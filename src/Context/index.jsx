@@ -3,33 +3,42 @@ import { createContext, useState } from "react";
 export const ShoppingCartContext = createContext()
 
 export const ShoppingCartProvider = ({children}) =>{
-    const [count, setCount] = useState(0) 
-    const [isOpenProductDetail, setIsOpen] = useState(false)
+    const [cart, setCart] = useState([]);
+    const [isOpenProductDetail, setIsOpenProductDetail] = useState(false);
+    const [productToShow, setProductToShow] = useState({});
 
+    const addToCart = (product, quantity) => {
+        setCart(prevCart => {
+            const existingProduct = prevCart.find(item => item.productId === product.productId);
+            if (existingProduct) {
+                return prevCart.map(item =>
+                    item.productId === product.productId
+                        ? { ...item, quantity: item.quantity + quantity }
+                        : item
+                );
+            } else {
+                return [...prevCart, { ...product, quantity }];
+            }
+        });
+    };
 
-//Product Detail . Open/Close
-    const openProductDetail = () => setIsOpen(true);
-    const closeProductDetail = () => setIsOpen(false);
+    const openProductDetail = () => setIsOpenProductDetail(true);
 
-//Product Detail . Show Product
-    const[productToShow, setProductToShow] = useState({
-        title: "",
-        price: "",
-        description: "",
-        images: [],
-      });
+    const closeProductDetail = () => {
+        setIsOpenProductDetail(false);
+    };
 
-    return(
+    return (
         <ShoppingCartContext.Provider value={{
-            count,
-            setCount,
+            cart,
+            addToCart,
             isOpenProductDetail,
+            productToShow,       
+            setProductToShow,      
             openProductDetail,
-            closeProductDetail,
-            productToShow,
-            setProductToShow
+            closeProductDetail
         }}>
             {children}
         </ShoppingCartContext.Provider>
-    )
+    );
 }
